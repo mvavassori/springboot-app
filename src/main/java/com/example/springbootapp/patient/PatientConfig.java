@@ -18,13 +18,11 @@ public class PatientConfig {
             Patient john = new Patient(
                     "John",
                     "john.doe@example.com",
-                    LocalDate.of(2000, Month.JANUARY, 1),
-                    24);
+                    LocalDate.of(2000, Month.JANUARY, 1));
             Patient mary = new Patient(
                     "Mary",
                     "mary.doe@example.com",
-                    LocalDate.of(2001, Month.JANUARY, 1),
-                    23);
+                    LocalDate.of(2004, Month.JANUARY, 1));
 
             repository.saveAll(List.of(john, mary));
         };

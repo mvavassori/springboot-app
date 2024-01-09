@@ -5,6 +5,7 @@
 package com.example.springbootapp.patient;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,5 +21,13 @@ public class PatientService {
 
     public List<Patient> getPatients() {
         return patientRepository.findAll();
+    }
+
+    public void addNewPatient(Patient patient) {
+        Optional<Patient> patientOptional = patientRepository.findPatientByEmail(patient.getEmail());
+        if (patientOptional.isPresent()) {
+            throw new IllegalStateException("email taken");
+        }
+        patientRepository.save(patient);
     }
 }
