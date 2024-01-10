@@ -1,3 +1,9 @@
+// This class is a configuration class that provides settings and setup for the patient feature.
+// Some common uses of a configuration class like this include:
+// - Defining specific beans or components related to patient functionality
+// - Including any additional configuration settings for the patient module
+// - Serving as a central place for configuring and initializing patient-related components
+
 package com.example.springbootapp.patient;
 
 import java.time.LocalDate;

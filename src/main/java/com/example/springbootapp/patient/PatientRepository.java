@@ -1,3 +1,9 @@
+// This interface defines a repository for interacting with patient data in the database.
+// Some common uses of a repository interface like this include:
+// - Providing CRUD operations for the Patient entity
+// - Extending JpaRepository to leverage Spring Data JPA functionality
+// - Acting as a bridge between the service layer and the underlying database
+
 package com.example.springbootapp.patient;
 
 import java.util.Optional;

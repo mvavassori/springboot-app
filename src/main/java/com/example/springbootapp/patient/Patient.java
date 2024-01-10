@@ -3,6 +3,7 @@
 // - Mapping database records to objects
 // - Passing patient data between layers/services
 // - Serializing to/from JSON for REST APIs
+
 package com.example.springbootapp.patient;
 
 import java.time.LocalDate;

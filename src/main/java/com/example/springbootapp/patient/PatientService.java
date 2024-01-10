@@ -1,7 +1,9 @@
-// The service class (PatientService) is annotated with @Service, indicating it handles business logic.
-// It contains a method to retrieve sample patient data.
-// This separates data access code from other layers.
-// This separates data access code from other layers
+// This class acts as a service layer for managing patient-related business logic in the application.
+// Some common uses of a service class like this include:
+// - Implementing business rules and logic for patient operations
+// - Acting as an intermediary between the controller and repository layers
+// - Encapsulating the application's core functionality related to patients
+
 package com.example.springbootapp.patient;
 
 import java.util.List;
@@ -9,6 +11,8 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import jakarta.transaction.Transactional;
 
 @Service
 public class PatientService {
@@ -28,6 +32,41 @@ public class PatientService {
         if (patientOptional.isPresent()) {
             throw new IllegalStateException("email taken");
         }
+        patientRepository.save(patient);
+    }
+
+    public void deletePatient(Long patientId) {
+        boolean exists = patientRepository.existsById(patientId);
+        if (!exists) {
+            throw new IllegalStateException("patient with id " + patientId + " does not exist");
+        }
+        patientRepository.deleteById(patientId);
+    }
+
+    @Transactional
+    public void updatePatient(Long patientId, Patient updatedPatient) {
+        Patient patient = patientRepository.findById(patientId)
+                .orElseThrow(() -> new IllegalStateException("patient with id " + patientId + " does not exist"));
+
+        String updatedName = updatedPatient.getName();
+        String updatedEmail = updatedPatient.getEmail();
+
+        if (updatedName != null && updatedName.length() > 0 && !patient.getName().equals(updatedName)) {
+            patient.setName(updatedName);
+        }
+
+        if (updatedEmail != null && updatedEmail.length() > 0 && !patient.getEmail().equals(updatedEmail)) {
+            Optional<Patient> patientOptional = patientRepository.findPatientByEmail(updatedEmail);
+            if (patientOptional.isPresent()) {
+                throw new IllegalStateException("email taken");
+            }
+
+            patient.setEmail(updatedEmail);
+        }
+
+        // handle other attributes if needed
+
+        // save updated patient to db
         patientRepository.save(patient);
     }
 }
